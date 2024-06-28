@@ -175,7 +175,7 @@ class AccountSettings extends StatelessWidget {
       children: [
         ListTile(
           leading: Icon(Icons.account_circle),
-          title: Text('Edit Profile'),
+          title: Text('Profile'),
           onTap: () {
             // Navigate to edit profile screen
           },

@@ -27,8 +27,9 @@ class _AnimeScreenState extends State<AnimeScreen> {
           child: CircleAvatar(
             radius: 18,
             backgroundColor: Colors.black,
-            child: Lottie.asset(
-              'assets/ps_splash.json',
+            child: Image.asset(
+
+              'assets/PS_Animeverse_Logo.png',
               width: 29,
               height: 29,
               fit: BoxFit.cover,
