@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
+import '../views/featured_animes.dart';
+import '../views/search_featured.dart';
 import '/api/get_anime_by_search_api.dart';
 import '/common/styles/paddings.dart';
 import '/models/anime.dart';
@@ -21,50 +24,58 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 50),
-            const Text(
-              'Search for animes',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w400,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            InkWell(
-              onTap: () {
-                showSearch(context: context, delegate: AnimeSearchDelegate());
+      appBar: AppBar(title: Text('Search for Animes'),),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
 
-              },
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: Container(
-                  height: 70,
-                  color: Colors.grey[300],
-                  child: const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(50, 10, 20, 10),
-                      child: Text(
-                        'Search',
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w500,
+
+              InkWell(
+                onTap: () {
+                  showSearch(context: context, delegate: AnimeSearchDelegate());
+
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: Container(
+                    height: 70,
+                    color: Colors.grey[300],
+                    child: const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(30, 10, 20, 10),
+                        child: Row(
+                          children: [
+                            Icon(Icons.search_outlined),
+                            SizedBox(width: 10,),
+                            Text(
+                              'Search',
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.black87,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+
+              SizedBox(height: 30,),
+
+              SearcgFeaturedAnimes(
+                rankingType: 'bypopularity',
+                label: 'Top Popular',
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -115,8 +126,13 @@ class AnimeSearchDelegate extends SearchDelegate<List<AnimeNode>> {
 
   Widget _buildSearchResults(BuildContext context) {
     if (query.isEmpty) {
-      return const Center(
-        child: Text('Enter search query'),
+      return Center(
+        child: Lottie.asset(
+          'assets/search_screen.json',
+          width: 340,
+          height: 340,
+          fit: BoxFit.fill,
+        ),
       );
     } else {
       return FutureBuilder<Iterable<Anime>>(
